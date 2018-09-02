@@ -1,4 +1,4 @@
-# app/controllers/items_controller.rb
+# app/controllers/v1/items_controller.rb
 module V1
   class ItemsController < ApplicationController
     before_action :set_todo
@@ -7,8 +7,9 @@ module V1
     # GET /todos/:todo_id/items
     def index
        # get paginated current user todos
-      @todos = current_user.todos.paginate(page: params[:page], per_page: 20)
-      json_response(@todos)
+      # @todos = current_user.todos.paginate(page: params[:page], per_page: 20)
+      @items = @todo.items
+      json_response(@items)
     end
 
     # GET /todos/:todo_id/items/:id
@@ -41,7 +42,7 @@ module V1
     end
 
     def set_todo
-      @todo = Todo.find(params[:todo_id])
+      @todo = current_user.todos.find(params[:todo_id])
     end
 
     def set_todo_item
